@@ -3,9 +3,11 @@
 gcloud compute networks create shared-vpc --subnet-mode custom
 gcloud compute networks update shared-vpc --bgp-routing-mode GLOBAL
 gcloud compute networks subnets create shared-vpc-subnet1 \
---network shared-vpc --range 10.1.1.0/24 --region "REGION"
+--network shared-vpc --range 10.1.1.0/24 --region "REGION" \
+--secondary-range shared-vpc-subnet1-services=10.0.32.0/20,shared-vpc-subnet1-pods=10.4.0.0/14
 gcloud compute networks subnets create shared-vpc-subnet2 \
---network shared-vpc --range 10.2.1.0/24 --region REGION 2
+--network shared-vpc --range 10.2.1.0/24 --region REGION 2 \
+--secondary-range shared-vpc-subnet2-services=172.16.16.0/20,shared-vpc-subnet2-pods=172.20.0.0/14
 gcloud compute firewall-rules create shared-vpc-allow-custom \
   --network shared-vpc \
   --allow tcp:0-65535,udp:0-65535,icmp \
