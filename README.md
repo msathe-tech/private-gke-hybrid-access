@@ -55,16 +55,16 @@ gcloud compute firewall-rules create on-prem-allow-subnets-from-shared-vpc \
 ## Hybrid connectivity between VPC & on-prem
 ### HA VPN 
 ```
-gcloud compute vpn-gateways create shared-vpc-vpn-gw1 --network shared-vpc --region "REGION"
-gcloud compute vpn-gateways create on-prem-vpn-gw1 --network on-prem --region "REGION"
-gcloud compute vpn-gateways describe shared-vpc-vpn-gw1 --region "REGION"
-gcloud compute vpn-gateways describe on-prem-vpn-gw1 --region "Region"
+gcloud compute vpn-gateways create shared-vpc-vpn-gw1 --network shared-vpc --region us-east1
+gcloud compute vpn-gateways create on-prem-vpn-gw1 --network on-prem --region us-central1
+gcloud compute vpn-gateways describe shared-vpc-vpn-gw1 --region us-east1
+gcloud compute vpn-gateways describe on-prem-vpn-gw1 --region us-central1
 gcloud compute routers create shared-vpc-router1 \
-    --region "REGION" \
+    --region us-east1 \
     --network shared-vpc \
     --asn 65001
 gcloud compute routers create on-prem-router1 \
-    --region "REGION" \
+    --region us-central1 \
     --network on-prem \
     --asn 65002
 ```
