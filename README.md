@@ -72,7 +72,7 @@ gcloud compute routers create on-prem-router1 \
 ```
 gcloud compute vpn-tunnels create shared-vpc-tunnel0 \
     --peer-gcp-gateway on-prem-vpn-gw1 \
-    --region "REGION" \
+    --region us-east1 \
     --ike-version 2 \
     --shared-secret [SHARED_SECRET] \
     --router shared-vpc-router1 \
@@ -80,7 +80,7 @@ gcloud compute vpn-tunnels create shared-vpc-tunnel0 \
     --interface 0
 gcloud compute vpn-tunnels create shared-vpc-tunnel1 \
     --peer-gcp-gateway on-prem-vpn-gw1 \
-    --region "REGION" \
+    --region us-east1 \
     --ike-version 2 \
     --shared-secret [SHARED_SECRET] \
     --router shared-vpc-router1 \
@@ -88,7 +88,7 @@ gcloud compute vpn-tunnels create shared-vpc-tunnel1 \
     --interface 1
 gcloud compute vpn-tunnels create on-prem-tunnel0 \
     --peer-gcp-gateway shared-vpc-vpn-gw1 \
-    --region "REGION" \
+    --region us-central1 \
     --ike-version 2 \
     --shared-secret [SHARED_SECRET] \
     --router on-prem-router1 \
@@ -96,7 +96,7 @@ gcloud compute vpn-tunnels create on-prem-tunnel0 \
     --interface 0
 gcloud compute vpn-tunnels create on-prem-tunnel1 \
     --peer-gcp-gateway shared-vpc-vpn-gw1 \
-    --region "REGION" \
+    --region us-central1 \
     --ike-version 2 \
     --shared-secret [SHARED_SECRET] \
     --router on-prem-router1 \
@@ -107,49 +107,49 @@ gcloud compute routers add-interface shared-vpc-router1 \
     --ip-address 169.254.0.1 \
     --mask-length 30 \
     --vpn-tunnel shared-vpc-tunnel0 \
-    --region "REGION"
+    --region us-east1
 gcloud compute routers add-bgp-peer shared-vpc-router1 \
     --peer-name bgp-on-prem-tunnel0 \
     --interface if-tunnel0-to-on-prem \
     --peer-ip-address 169.254.0.2 \
     --peer-asn 65002 \
-    --region "REGION"
+    --region us-east1
 gcloud compute routers add-interface shared-vpc-router1 \
     --interface-name if-tunnel1-to-on-prem \
     --ip-address 169.254.1.1 \
     --mask-length 30 \
     --vpn-tunnel shared-vpc-tunnel1 \
-    --region "REGION"
+    --region us-east1
 gcloud compute routers add-bgp-peer shared-vpc-router1 \
     --peer-name bgp-on-prem-tunnel1 \
     --interface if-tunnel1-to-on-prem \
     --peer-ip-address 169.254.1.2 \
     --peer-asn 65002 \
-    --region "REGION"
+    --region us-east1
 gcloud compute routers add-interface on-prem-router1 \
     --interface-name if-tunnel0-to-shared-vpc \
     --ip-address 169.254.0.2 \
     --mask-length 30 \
     --vpn-tunnel on-prem-tunnel0 \
-    --region "REGION"
+    --region us-central1
 gcloud compute routers add-bgp-peer on-prem-router1 \
     --peer-name bgp-shared-vpc-tunnel0 \
     --interface if-tunnel0-to-shared-vpc \
     --peer-ip-address 169.254.0.1 \
     --peer-asn 65001 \
-    --region "REGION"
+    --region us-central1
 gcloud compute routers add-interface  on-prem-router1 \
     --interface-name if-tunnel1-to-shared-vpc \
     --ip-address 169.254.1.2 \
     --mask-length 30 \
     --vpn-tunnel on-prem-tunnel1 \
-    --region "REGION"
+    --region us-central1
 gcloud compute routers add-bgp-peer  on-prem-router1 \
     --peer-name bgp-shared-vpc-tunnel1 \
     --interface if-tunnel1-to-shared-vpc \
     --peer-ip-address 169.254.1.1 \
     --peer-asn 65001 \
-    --region "REGION"
+    --region us-central1
 ```
 ### Verify the hybrid connectivity 
 ```
