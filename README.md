@@ -15,8 +15,14 @@ gcloud compute firewall-rules create shared-vpc-allow-custom \
 gcloud compute firewall-rules create shared-vpc-allow-ssh-icmp \
     --network shared-vpc \
     --allow tcp:22,icmp
-gcloud compute instances create shared-vpc-instance1 --machine-type=e2-medium --zone us-east1-b --subnet shared-vpc-subnet1
-gcloud compute instances create shared-vpc-instance2 --machine-type=e2-medium --zone us-east4-b --subnet shared-vpc-subnet2
+gcloud compute instances create shared-vpc-instance1 --zone=us-east1-b --machine-type=e2-medium \
+    --network-interface=subnet=shared-vpc-subnet1,no-address \
+    --shielded-secure-boot --shielded-vtpm --shielded-integrity-monitoring 
+
+gcloud compute instances create shared-vpc-instance2 --zone=us-east4-b --machine-type=e2-medium \
+    --network-interface=subnet=shared-vpc-subnet2,no-address \
+    --shielded-secure-boot --shielded-vtpm --shielded-integrity-monitoring 
+
 gcloud compute firewall-rules create shared-vpc-allow-subnets-from-on-prem \
     --network shared-vpc \
     --allow tcp,udp,icmp \
@@ -35,8 +41,11 @@ gcloud compute firewall-rules create on-prem-allow-custom \
 gcloud compute firewall-rules create on-prem-allow-ssh-icmp \
     --network on-prem \
     --allow tcp:22,icmp
-gcloud compute instances create on-prem-instance1 --machine-type=e2-medium \
-    --zone us-central1-b --subnet on-prem-subnet1
+
+gcloud compute instances create on-prem-instance1 --zone=us-central1-b --machine-type=e2-medium \
+    --network-interface=subnet=on-prem-subnet1,no-address \
+    --shielded-secure-boot --shielded-vtpm --shielded-integrity-monitoring
+
 gcloud compute firewall-rules create on-prem-allow-subnets-from-shared-vpc \
     --network on-prem \
     --allow tcp,udp,icmp \
